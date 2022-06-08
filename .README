@@ -6,6 +6,7 @@ Run the following commands:
 python -m venv .venv
 
 source .venv/Scripts/activate
+source . .venv/bin/activate
 ```
 
 # Install Required Packages
