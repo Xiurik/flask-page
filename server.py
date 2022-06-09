@@ -1,5 +1,7 @@
 
 # region 'Imports'
+import json
+
 from flask import Flask, redirect, render_template, request
 
 # endregion
@@ -45,7 +47,8 @@ def submit_form():
         data = request.form.to_dict()
         #? Now data is a dictionary like this:
         #? {'email': 'irwin.romero.rdz@gmail.com', 'subject': 'testing', 'message': 'testing mesage'}
-        print(data)
+        with open('./static/db.txt', 'a') as db:
+            db.write(f'\n {json.dumps(data)}')
         return redirect('thanks')
     else:
         return 'Something went wrong'
