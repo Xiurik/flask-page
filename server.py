@@ -1,5 +1,6 @@
 
 # region 'Imports'
+import csv
 import json
 
 from flask import Flask, redirect, render_template, request
@@ -47,9 +48,19 @@ def submit_form():
         data = request.form.to_dict()
         #? Now data is a dictionary like this:
         #? {'email': 'irwin.romero.rdz@gmail.com', 'subject': 'testing', 'message': 'testing mesage'}
-        with open('./static/db.txt', 'a') as db:
-            db.write(f'\n {json.dumps(data)}')
+        write_to_file(data)
+        write_to_csv(data)
         return redirect('thanks')
     else:
         return 'Something went wrong'
+    
+    
+def write_to_file(data):
+    with open('./static/db.txt', mode='a') as db:
+            db.write(f'{json.dumps(data)} \n')
+            
+            
+def write_to_csv(data):
+    with open('./static/db.csv', mode='a', newline='') as db:
+            csv.writer(db, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL).writerow([data['email'], data['subject'], data['message']])
 # endregion
